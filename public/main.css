@@ -36,6 +36,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row-reverse;
+
   height: 80px;
 }
 
@@ -59,6 +61,7 @@ nav ul {
   align-items: center;
   list-style: none;
   margin: 0;
+  flex-direction: row-reverse;
   padding: 0;
 }
 
@@ -111,7 +114,10 @@ nav ul li a i {
 .login-btn i {
   margin-left: 8px;
 }
-
+.logo img {
+  height: 50px;
+  width: auto;
+}
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -155,15 +161,19 @@ nav ul li a i {
 footer {
   background: linear-gradient(135deg, var(--primary-color) 0%, #2e4f3d 100%);
   color: var(--white);
-  padding: 80px 0 30px 60px;
-  position: relative;
+  padding: 30px 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-  margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  gap: 20px;
 }
 
 .footer-column h3 {
@@ -174,9 +184,10 @@ footer {
   padding-bottom: 15px;
 }
 
-.footer-links {
-  list-style: none;
-  padding: 0;
+.footer-column .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 25px;
 }
 
 .footer-links li {

@@ -2,17 +2,24 @@ const createHeader = () => {
   const header = createHtmlElement("header", "", "", { id: "main-header" });
 
   const container = createHtmlElement("div", "header-container");
+  const logo1 = createHtmlElement("div", "logo");
 
+  const logoImg = createHtmlElement("img", "", "", {
+    src: "assets/images/logo.png",
+    alt: "أذكار المسلم",
+  });
   const logo = createHtmlElement("div", "logo");
   const h1 = createHtmlElement("h1");
   h1.innerHTML = `أذكار <span>المسلم</span>`;
-  customAppendChild(logo, h1);
+  customAppendChild(logo, h1, logo1);
 
   const mobileBtn = createHtmlElement("button", "mobile-menu-btn", "", {
     id: "mobile-menu-btn",
   });
   const iconBars = createHtmlElement("i", "fas fa-bars");
   customAppendChild(mobileBtn, iconBars);
+
+  customAppendChild(logo1, logoImg);
 
   const nav = createHtmlElement("nav", "", "", { id: "main-nav" });
   const ul = createHtmlElement("ul");
