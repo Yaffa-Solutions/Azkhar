@@ -4,15 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "amjad",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yaffa-Solutions/Azkhar.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "dependencies": {
+    "dependencies": {
     "cors": "^2.8.5",
     "env2": "^2.2.2",
     "express": "^5.1.0",
     "pg": "^8.16.3"
+  },
+  "bugs": {
+    "url": "https://github.com/Yaffa-Solutions/Azkhar/issues"
+  },
+  "homepage": "https://github.com/Yaffa-Solutions/Azkhar#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }
