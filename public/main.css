@@ -155,7 +155,7 @@ nav ul li a i {
 footer {
   background: linear-gradient(135deg, var(--primary-color) 0%, #2e4f3d 100%);
   color: var(--white);
-  padding: 80px 0 30px;
+  padding: 80px 0 30px 60px;
   position: relative;
 }
 
