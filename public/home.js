@@ -71,38 +71,6 @@ const createFooter = () => {
     a.appendChild(icon);
     socialLinks.appendChild(a);
   });
-  function setupHeaderInteractions() {
-    const header = document.getElementById("main-header");
-    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-    const mainNav = document.getElementById("main-nav");
-    const navLinks = document.querySelectorAll("#main-nav ul li a");
-
-    window.addEventListener("scroll", function () {
-      if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    });
-
-    mobileMenuBtn.addEventListener("click", function () {
-      mainNav.classList.toggle("active");
-      if (mainNav.classList.contains("active")) {
-        mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
-      } else {
-        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-      }
-    });
-
-    navLinks.forEach((link) => {
-      link.addEventListener("click", function () {
-        if (window.innerWidth <= 992) {
-          mainNav.classList.remove("active");
-          mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        }
-      });
-    });
-  }
 
   customAppendChild(col1, h3Col1, pCol1, socialLinks);
 
@@ -133,17 +101,9 @@ const createFooter = () => {
     { href: "#", text: "المقالات" },
   ];
 
-  const contactLinks = [
-    { href: "#", text: "اقتراحاتكم" },
-    { href: "#", text: "الإبلاغ عن مشكلة" },
-    { href: "#", text: "الدعم الفني" },
-    { href: "#", text: "الأسئلة الشائعة" },
-  ];
-
   const col2 = createFooterLinksColumn("روابط سريعة", quickLinks);
-  const col3 = createFooterLinksColumn("اتصل بنا", contactLinks);
 
-  customAppendChild(footerContent, col1, col2, col3);
+  customAppendChild(footerContent, col1, col2);
 
   const copyrightDiv = createHtmlElement("div", "copyright");
   const copyrightP = createHtmlElement(
