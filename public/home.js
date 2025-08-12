@@ -57,22 +57,7 @@ const createFooter = () => {
     "منصة إلكترونية متكاملة لمساعدة المسلمين على المداومة على ذكر الله تعالى في جميع الأوقات."
   );
 
-  const socialLinks = createHtmlElement("div", "social-links");
-  const socialIcons = [
-    { href: "#", iconClass: "fab fa-facebook-f" },
-    { href: "#", iconClass: "fab fa-twitter" },
-    { href: "#", iconClass: "fab fa-instagram" },
-    { href: "#", iconClass: "fab fa-youtube" },
-  ];
-
-  socialIcons.forEach(({ href, iconClass }) => {
-    const a = createHtmlElement("a", "", "", { href });
-    const icon = createHtmlElement("i", iconClass);
-    a.appendChild(icon);
-    socialLinks.appendChild(a);
-  });
-
-  customAppendChild(col1, h3Col1, pCol1, socialLinks);
+  customAppendChild(col1, h3Col1, pCol1);
 
   function createFooterLinksColumn(title, links) {
     const col = createHtmlElement("div", "footer-column");
