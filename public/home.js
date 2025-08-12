@@ -5,7 +5,7 @@ const createHeader = () => {
   const logo1 = createHtmlElement("div", "logo");
 
   const logoImg = createHtmlElement("img", "", "", {
-    src: "./assets/images/logo.png",
+    src: "../assets/images/logo.png",
     alt: "أذكار المسلم",
   });
   const logo = createHtmlElement("div", "logo");
