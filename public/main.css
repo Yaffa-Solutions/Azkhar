@@ -174,16 +174,6 @@ footer {
   padding-bottom: 15px;
 }
 
-.footer-column h3:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 50px;
-  height: 3px;
-  background: var(--secondary-color);
-}
-
 .footer-links {
   list-style: none;
   padding: 0;
