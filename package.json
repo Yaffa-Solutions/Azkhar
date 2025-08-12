@@ -12,7 +12,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node azkhar-backend/index.js"
   },
   "author": "Amjad",
   "license": "ISC"
