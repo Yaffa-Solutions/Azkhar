@@ -6,4 +6,5 @@ const getZeker = () => {
   );
 };
 
+
 module.exports = { getZeker };
