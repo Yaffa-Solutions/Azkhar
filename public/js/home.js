@@ -165,7 +165,14 @@ const setupHeaderInteractions = () => {
       }
     });
   });
-};
+   const articlesLink = document.querySelector('a[href="#articles"]');
+    if (articlesLink) {
+     articlesLink.addEventListener("click", (e) => {
+       e.preventDefault();
+       renderArticlesPage();
+     });
+  }
+ };
 
 const createHeroBanner = () => {
   const section = createHtmlElement("section", "hero-banner");
@@ -301,9 +308,15 @@ const updateRandomZekr = () => {
   randomZekrElement.textContent = `"${azkar[randomIndex]}"`;
 };
 
+const getRandomArticles = () => {
+  return dbConnection.query(
+    `SELECT id, title, excerpt, img, alt, category FROM articles ORDER BY RANDOM() LIMIT 3`
+  ).then(result => result.rows);
+};
 const createArticlesSection = () => {
   const articlesData = [
     {
+      id: 1,
       img: "https://images.unsplash.com/photo-1568219656418-15c329312bf1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       alt: "فضل الذكر",
       category: "فضائل الأذكار",
@@ -313,6 +326,7 @@ const createArticlesSection = () => {
       link: "#",
     },
     {
+      d: 2,
       img: "https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       alt: "أذكار الصباح والمساء",
       category: "أذكار اليوم",
@@ -322,6 +336,7 @@ const createArticlesSection = () => {
       link: "#",
     },
     {
+      id: 3,
       img: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
       alt: "المداومة على الأذكار",
       category: "نصائح عملية",
@@ -331,6 +346,173 @@ const createArticlesSection = () => {
       link: "#",
     },
   ];
+
+  window.addEventListener("hashchange", () => {
+  const hash = window.location.hash;
+  if (hash.startsWith("#article/")) {
+    const id = hash.split("/")[1];
+    renderArticlePage(id);
+  } else {
+    renderHome();
+  }
+});
+
+// فانكشن تجيب 3 مقالات عشوائية من قاعدة البيانات
+// const getRandomArticles = () => {
+//   return dbConnection.query(
+//     `SELECT id, title, excerpt, img, alt, category FROM articles ORDER BY RANDOM() LIMIT 3`
+//   ).then(result => result.rows);
+// };
+
+// // فانكشن تعرض المقالات في الصفحة
+// const createArticlesSection = (articles) => {
+//   const section = createHtmlElement("section", "articles-section");
+//   section.style.display = "flex";
+//   section.style.justifyContent = "center";
+//   section.style.flexDirection = "column";
+//   section.style.alignItems = "center";
+//   section.style.gap = "30px";
+//   section.style.padding = "20px";
+
+//   articles.forEach(article => {
+//     const card = createHtmlElement("div", "article-card");
+//     card.style.border = "1px solid #ccc";
+//     card.style.borderRadius = "10px";
+//     card.style.width = "400px";
+//     card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+//     card.style.overflow = "hidden";
+//     card.style.textAlign = "center";
+//     card.style.display = "flex";
+//     card.style.flexDirection = "column";
+
+//     const img = createHtmlElement("img", "", "", { src: article.img, alt: article.alt });
+//     img.style.width = "100%";
+//     img.style.height = "auto";
+
+//     const content = createHtmlElement("div", "article-content");
+//     content.style.padding = "15px";
+
+//     const title = createHtmlElement("h2", "", article.title);
+//     title.style.marginBottom = "10px";
+
+//     const excerpt = createHtmlElement("p", "", article.excerpt);
+//     excerpt.style.marginBottom = "15px";
+
+//     const readMore = createHtmlElement("a", "", "اقرأ المزيد", { href: `#article/${article.id}` });
+//     readMore.style.textDecoration = "none";
+//     readMore.style.color = "#fff";
+//     readMore.style.backgroundColor = "#007bff";
+//     readMore.style.padding = "10px 15px";
+//     readMore.style.borderRadius = "5px";
+
+//     customAppendChild(content, title, excerpt, readMore);
+//     customAppendChild(card, img, content);
+//     section.appendChild(card);
+//   });
+
+//   return section;
+// };
+
+// // تعديل renderHome ليجلب المقالات من الداتا بيز
+// const renderHome = () => {
+//   const main = document.querySelector("main");
+//   main.innerHTML = "";
+
+//   main.appendChild(createHeroBanner());
+//   main.appendChild(createFeaturesSection());
+//   main.appendChild(createRandomZekrSection());
+//   main.appendChild(createAzkarSection());
+
+//   getRandomArticles().then(articles => {
+//     main.appendChild(createArticlesSection(articles));
+//   });
+
+//   setupHeaderInteractions();
+// };
+
+// // التعامل مع المقالات الفردية
+// window.addEventListener("hashchange", () => {
+//   const hash = window.location.hash;
+//   if (hash.startsWith("#article/")) {
+//     const id = hash.split("/")[1];
+//     renderArticlePage(id);
+//   } else {
+//     renderHome();
+//   }
+// });
+
+
+// const renderArticlePage = (id) => {
+//   const main = document.querySelector("main");
+//   main.innerHTML = "";
+//   const article = articlesData.find(a => a.id == id);
+//   if (!article) return renderHome();
+
+//   const section = createHtmlElement("section", "article-page");
+//   const title = createHtmlElement("h2", "", article.title);
+//   const img = createHtmlElement("img", "", "", { src: article.img, alt: article.alt });
+//   const p = createHtmlElement("p", "", article.excerpt);
+
+//   customAppendChild(section, title, img, p);
+//   main.appendChild(section);
+// };
+
+// const renderArticlePage = (id) => {
+//   const main = document.querySelector("main");
+//   main.innerHTML = "";
+
+//   const article = articlesData.find(a => a.id == id);
+//   if (!article) return renderHome();
+
+//   // الكارد
+//   const section = createHtmlElement("section", "article-page");
+//   const card = createHtmlElement("div", "article-card-single");
+
+//   const img = createHtmlElement("img", "", "", { src: article.img, alt: article.alt });
+//   const title = createHtmlElement("h2", "", article.title);
+//   const p = createHtmlElement("p", "", article.excerpt);
+
+//   customAppendChild(card, img, title, p);
+//   section.appendChild(card);
+//   main.appendChild(section);
+// };
+const renderArticlePage = (id) => {
+  const main = document.querySelector("main");
+  main.innerHTML = "";
+
+  const article = articlesData.find(a => a.id == id);
+  if (!article) return renderHome();
+
+  // الكارد
+  const section = createHtmlElement("section", "article-page");
+  section.style.display = "flex";
+  section.style.justifyContent = "center";
+  section.style.padding = "40px 20px";
+
+  const card = createHtmlElement("div", "article-card-single");
+  card.style.maxWidth = "600px";
+  card.style.width = "100%";
+  card.style.background = "#fff";
+  card.style.borderRadius = "8px";
+  card.style.boxShadow = "0 4px 10px rgba(0,0,0,0.1)";
+  card.style.overflow = "hidden";
+  card.style.textAlign = "center";
+
+  const img = createHtmlElement("img", "", "", { src: article.img, alt: article.alt });
+  img.style.width = "100%";
+  img.style.height = "auto";
+
+  const title = createHtmlElement("h2", "", article.title);
+  title.style.margin = "20px 0 10px";
+
+  const p = createHtmlElement("p", "", article.excerpt);
+  p.style.padding = "0 20px 20px";
+  p.style.lineHeight = "1.6";
+
+  customAppendChild(card, img, title, p);
+  section.appendChild(card);
+  main.appendChild(section);
+};
 
   const section = createHtmlElement("section", "section articles-section");
   const container = createHtmlElement("div", "container");
@@ -357,7 +539,8 @@ const createArticlesSection = () => {
     const h3 = createHtmlElement("h3", "", article.title);
     const excerpt = createHtmlElement("p", "article-excerpt", article.excerpt);
     const link = createHtmlElement("a", "read-more", `اقرأ المزيد `, {
-      href: article.link,
+      href: `#article/${article.id}`
+      //article.link,
     });
     const icon = createHtmlElement("i", "fas fa-arrow-left");
     link.appendChild(icon);
@@ -369,7 +552,7 @@ const createArticlesSection = () => {
 
   const showMoreBtnWrapper = createHtmlElement("div", "show-more-btn");
   const showMoreBtn = createHtmlElement("a", "btn", "عرض جميع المقالات", {
-    href: "#",
+    href: "#articles",
   });
   const btnIcon = createHtmlElement("i", "fas fa-arrow-left");
   showMoreBtn.appendChild(btnIcon);
@@ -429,3 +612,17 @@ const createAzkarSection = () => {
 
   return section;
 };
+document.addEventListener("DOMContentLoaded", () => {
+  setupHeaderInteractions();
+  renderHome();
+});
+
+window.addEventListener("hashchange", () => {
+  const hash = window.location.hash;
+  if (hash.startsWith("#article/")) {
+    const id = hash.split("/")[1];
+    renderArticleDetailPage(id);
+  } else if (hash === "#articles") {
+    renderArticlesPage();
+  }
+});

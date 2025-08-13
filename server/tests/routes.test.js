@@ -19,7 +19,7 @@ it("should return all users", (done) => {
       done();
     });
 });
-after((done) => {
+afterAll((done) => {
   db.end()
     .then(() => done())
     .catch((err) => done(err));
@@ -171,7 +171,7 @@ describe("DELETE /tasks/:id", () => {
 describe("GET /articles", () => {
   it("should return all articles with author", (done) => {
     request(app)
-      .get("/articles")
+      .get("/article")
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);

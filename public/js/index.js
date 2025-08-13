@@ -7,6 +7,7 @@ const renderHome = () => {
   main.appendChild(createRandomZekrSection());
   main.appendChild(createAzkarSection());
   main.appendChild(createArticlesSection());
+  // main.appendChild(createArticleCard())
 };
 
 const renderRoute = async () => {
@@ -16,6 +17,10 @@ const renderRoute = async () => {
   switch (hash) {
     case "#azkar":
       await renderZekerSection();
+
+      break;
+      case "#articles":
+      await renderArticlesCard();
 
       break;
 

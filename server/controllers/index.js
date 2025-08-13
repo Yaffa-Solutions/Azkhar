@@ -144,11 +144,12 @@ router.delete("/tasks/:id", (req, res) => {
 router.get("/articles", (req, res) => {
   dbConnection
     .query(
-      `
-    SELECT a.*, u.username AS author
-    FROM public.article a
-    LEFT JOIN userschema.users u ON a.author_id = u.id
-  `
+  //     `
+  //   SELECT a.*, u.username AS author
+  //   FROM public.article a
+  //   LEFT JOIN userschema.users u ON a.author_id = u.id
+  // `
+  `SELECT * FROM public.article`
     )
     .then((result) => res.json(result.rows))
     .catch((err) => {
