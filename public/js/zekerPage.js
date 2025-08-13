@@ -46,7 +46,7 @@ const renderZekerSection = async () => {
     id: "zeker",
   });
   const container = createHtmlElement("div", "container");
-  const title = createHtmlElement("h2", "section-title", "تصفح أذكار المسلم");
+  const title = createHtmlElement("h2", "section-title1", "تصفح أذكار المسلم");
 
   const categoryWrapper = createHtmlElement("div", "zeker-categories");
 
