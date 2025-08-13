@@ -1,17 +1,15 @@
 const createHeader = () => {
   const header = createHtmlElement("header", "", "", { id: "main-header" });
-
   const container = createHtmlElement("div", "header-container");
-  const logo1 = createHtmlElement("div", "logo");
 
+  const logo = createHtmlElement("div", "logo");
   const logoImg = createHtmlElement("img", "", "", {
     src: "../assets/images/logo.png",
     alt: "أذكار المسلم",
   });
-  const logo = createHtmlElement("div", "logo");
   const h1 = createHtmlElement("h1");
   h1.innerHTML = `أذكار <span>المسلم</span>`;
-  customAppendChild(logo, h1, logo1);
+  customAppendChild(logo, logoImg, h1);
 
   const mobileBtn = createHtmlElement("button", "mobile-menu-btn", "", {
     id: "mobile-menu-btn",
@@ -19,29 +17,55 @@ const createHeader = () => {
   const iconBars = createHtmlElement("i", "fas fa-bars");
   customAppendChild(mobileBtn, iconBars);
 
-  customAppendChild(logo1, logoImg);
-
   const nav = createHtmlElement("nav", "", "", { id: "main-nav" });
   const ul = createHtmlElement("ul");
 
-  function createNavItem(href, iconClass, text, extraClass = "") {
-    const li = createHtmlElement("li");
-    const a = createHtmlElement("a", extraClass, "", { href });
-    const icon = createHtmlElement("i", iconClass);
-    customAppendChild(a, icon, document.createTextNode(" " + text));
-    li.appendChild(a);
-    return li;
-  }
+  const links = [
+    { href: "#/", label: "الرئيسية", iconClass: "fas fa-home" },
+    { href: "#azkar", label: "الأذكار", iconClass: "fas fa-book-quran" },
+    { href: "#favorites", label: "المفضلة", iconClass: "fas fa-heart" },
+    { href: "#tasks", label: "قائمة المهام", iconClass: "fas fa-tasks" },
+    { href: "#articles", label: "المقالات", iconClass: "fas fa-book-open" },
+  ];
 
-  customAppendChild(
-    ul,
-    createNavItem("#", "fas fa-home", "الرئيسية"),
-    createNavItem("#azkar", "fas fa-book-quran", "الأذكار"),
-    createNavItem("#", "fas fa-heart", "المفضلة"),
-    createNavItem("#", "fas fa-tasks", "قائمة المهام"),
-    createNavItem("#", "fas fa-book-open", "المقالات"),
-    createNavItem("#", "fas fa-sign-in-alt", "تسجيل الدخول", "login-btn")
-  );
+  links.forEach(({ href, label, iconClass }) => {
+    const li = createHtmlElement("li");
+
+    const a = createHtmlElement("a", "nav-link", "", { href });
+    const icon = createHtmlElement("i", iconClass);
+    customAppendChild(a, icon, document.createTextNode(" " + label));
+
+    const activeInd = createHtmlElement("span", "active-indicator");
+    customAppendChild(a, activeInd);
+
+    li.appendChild(a);
+    ul.appendChild(li);
+
+    if (
+      window.location.hash === href ||
+      (window.location.hash === "" && href === "#/")
+    ) {
+      a.classList.add("active");
+      activeInd.style.width = "100%";
+    }
+  });
+
+  window.addEventListener("hashchange", () => {
+    const navLinks = ul.querySelectorAll(".nav-link");
+    navLinks.forEach((link) => {
+      const ind = link.querySelector("span");
+      if (
+        link.getAttribute("href") === window.location.hash ||
+        (window.location.hash === "" && link.getAttribute("href") === "#/")
+      ) {
+        link.classList.add("active");
+        ind.style.width = "100%";
+      } else {
+        link.classList.remove("active");
+        ind.style.width = "0%";
+      }
+    });
+  });
 
   customAppendChild(nav, ul);
   customAppendChild(container, logo, mobileBtn, nav);
@@ -245,14 +269,13 @@ const createRandomZekrSection = () => {
   const container = createHtmlElement("div", "container");
   const randomZekrDiv = createHtmlElement("div", "random-zekr");
 
-  const h2 = createHtmlElement("h2", "", "ذكر عشوائي");
   const p = createHtmlElement(
     "p",
     "",
     '"اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً"'
   );
 
-  customAppendChild(randomZekrDiv, h2, p);
+  customAppendChild(randomZekrDiv, p);
   customAppendChild(container, randomZekrDiv);
   section.appendChild(container);
 
@@ -353,6 +376,55 @@ const createArticlesSection = () => {
   showMoreBtnWrapper.appendChild(showMoreBtn);
 
   customAppendChild(container, title, articlesGrid, showMoreBtnWrapper);
+  section.appendChild(container);
+
+  return section;
+};
+
+const createAzkarSection = () => {
+  const azkarData = [
+    { icon: "fas fa-sun", title: "أذكار الصباح", count: 25, link: "#" },
+    { icon: "fas fa-moon", title: "أذكار المساء", count: 22, link: "#" },
+    { icon: "fas fa-bed", title: "أذكار النوم", count: 15, link: "#" },
+    { icon: "fas fa-pray", title: "أذكار الصلاة", count: 30, link: "#" },
+  ];
+
+  const section = createHtmlElement("section", "section azkar-section", "", {
+    id: "azkar",
+  });
+  const container = createHtmlElement("div", "container");
+  const title = createHtmlElement("h2", "section-title", "تصفح أذكار المسلم");
+
+  const categoriesWrapper = createHtmlElement("div", "azkar-categories");
+
+  azkarData.forEach((item) => {
+    const categoryCard = createHtmlElement("div", "azkar-category");
+
+    const iconDiv = createHtmlElement("div", "azkar-icon");
+    const icon = createHtmlElement("i", item.icon);
+    iconDiv.appendChild(icon);
+
+    const h3 = createHtmlElement("h3", "", item.title);
+
+    const link = createHtmlElement("a", "view-azkar", "عرض الأذكار ", {
+      href: item.link,
+    });
+    const arrowIcon = createHtmlElement("i", "fas fa-arrow-left");
+    link.appendChild(arrowIcon);
+
+    customAppendChild(categoryCard, iconDiv, h3, link);
+    categoriesWrapper.appendChild(categoryCard);
+  });
+
+  const showMoreBtnWrapper = createHtmlElement("div", "show-more-btn");
+  const showMoreBtn = createHtmlElement("a", "btn", "عرض جميع الأذكار", {
+    href: "#",
+  });
+  const btnIcon = createHtmlElement("i", "fas fa-arrow-left");
+  showMoreBtn.appendChild(btnIcon);
+  showMoreBtnWrapper.appendChild(showMoreBtn);
+
+  customAppendChild(container, title, categoriesWrapper, showMoreBtnWrapper);
   section.appendChild(container);
 
   return section;
