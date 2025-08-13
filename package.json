@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/Yaffa-Solutions/Azkhar#readme",
   "devDependencies": {
+    "concurrently": "^9.2.0",
     "nodemon": "^1.19.4"
   }
 }
