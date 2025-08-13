@@ -391,7 +391,7 @@ footer {
 .section-title {
   text-align: center;
   margin-bottom: 60px;
-  color: var(--primary-color);
+  color: white;
   font-size: 2.8rem;
   position: relative;
 }
@@ -618,4 +618,225 @@ footer {
 .show-more-btn {
   text-align: center;
   margin-top: 50px;
+}
+
+.azkar-section {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 43, 0.03) 0%,
+    rgba(46, 79, 61, 0.03) 100%
+  );
+}
+
+.azkar-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.azkar-category {
+  background: var(--white);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.azkar-category:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.azkar-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  background: linear-gradient(
+    to right,
+    var(--secondary-color),
+    var(--accent-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.azkar-category h3 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.azkar-count {
+  display: inline-block;
+  background-color: var(--light-color);
+  color: var(--primary-color);
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.view-azkar {
+  display: inline-block;
+  padding: 10px 25px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.view-azkar:hover {
+  background-color: #2e4f3d;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.zeker-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #1e3a2b, #2e4f3d);
+  color: #fff;
+}
+
+.zeker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.zeker-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.zeker-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+  border-color: #d4af37;
+}
+
+.zeker-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #d4af37;
+}
+
+.zeker-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.zeker-card p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.zeker-count {
+  font-weight: bold;
+  color: #8e7037;
+}
+
+.zeker-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.category-label {
+  padding: 12px 24px;
+  border-radius: 30px;
+  background-color: var(--white);
+  color: var(--dark-color);
+  border: 2px solid var(--secondary-color);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-label:hover {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.category-label.active {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  border-color: var(--secondary-color);
+}
+
+.category-label::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.3) 1%,
+      transparent 1%
+    )
+    center/15000%;
+  opacity: 0;
+  transition: opacity 0.5s, background-size 0.5s;
+}
+
+.category-label:active::after {
+  background-size: 100%;
+  opacity: 1;
+  transition: 0s;
+}
+@media (max-width: 768px) {
+  .zeker-categories {
+    gap: 8px;
+  }
+
+  .category-label {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+}
+.counter-buttons {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.increment-btn,
+.decrement-btn {
+  padding: 4px 8px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.decrement-btn {
+  background-color: #f44336;
+}
+
+.increment-btn:hover,
+.decrement-btn:hover {
+  opacity: 0.8;
 }
