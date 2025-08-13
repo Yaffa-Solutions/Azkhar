@@ -269,14 +269,13 @@ const createRandomZekrSection = () => {
   const container = createHtmlElement("div", "container");
   const randomZekrDiv = createHtmlElement("div", "random-zekr");
 
-  const h2 = createHtmlElement("h2", "", "ذكر عشوائي");
   const p = createHtmlElement(
     "p",
     "",
     '"اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً"'
   );
 
-  customAppendChild(randomZekrDiv, h2, p);
+  customAppendChild(randomZekrDiv, p);
   customAppendChild(container, randomZekrDiv);
   section.appendChild(container);
 
