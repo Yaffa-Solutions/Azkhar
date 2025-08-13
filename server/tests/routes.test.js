@@ -119,7 +119,7 @@ describe("POST /tasks", () => {
 
 describe("PUT /tasks/:id", () => {
   it("should update a specific task", (done) => {
-    const testId = 1; // حطي id موجود في جدول task
+    const testId = 1; 
     const updateData = {
       user_id: 1,
       zekher_id: 2,
