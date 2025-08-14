@@ -1,19 +1,14 @@
 const { Pool } = require("pg");
-require("env2")("./config.env");
+require("dotenv").config({ path: './config.env' });
 
-if (!process.env.DB_URL) throw new Error("No Database URL!!!");
-
-const params = new URL(process.env.DB_URL);
-console.log("DB_URL:", params);
+const connectionString = process.env.DATABASE_URL || "postgres://azkhars:NG4H2QJz30ph3pll0qrfjsMcOSnywBF5@dpg-d2ddi88gjchc73djnid0-a.oregon-postgres.render.com:5432/azkhars";
 
 const options = {
-  host: params.hostname,
-  port: params.port,
-  database: params.pathname.split("/")[1],
+  connectionString,
+  ssl: {
+    rejectUnauthorized: false 
+  },
   max: process.env.DB_MAX_CONNECTIONS || 2,
-  user: params.username,
-  password: params.password,
-  ssl: false,
 };
 
 module.exports = new Pool(options);

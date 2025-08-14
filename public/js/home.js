@@ -9,7 +9,7 @@ const createHeader = () => {
   });
   const h1 = createHtmlElement("h1");
   h1.innerHTML = `أذكار <span>المسلم</span>`;
-  customAppendChild(logo, logoImg, h1);
+  customAppendChild(logo, h1, logoImg);
 
   const mobileBtn = createHtmlElement("button", "mobile-menu-btn", "", {
     id: "mobile-menu-btn",
@@ -418,7 +418,7 @@ const createAzkarSection = () => {
 
   const showMoreBtnWrapper = createHtmlElement("div", "show-more-btn");
   const showMoreBtn = createHtmlElement("a", "btn", "عرض جميع الأذكار", {
-    href: "#",
+    href: "#azkar",
   });
   const btnIcon = createHtmlElement("i", "fas fa-arrow-left");
   showMoreBtn.appendChild(btnIcon);

@@ -19,6 +19,15 @@ const renderRoute = async () => {
 
       break;
 
+    case "#favorites":
+      renderFav();
+      break;
+
+    case "#tasks":
+      renderTaskGrid();
+
+      break;
+
     default:
       renderHome();
       break;
@@ -28,7 +37,7 @@ const renderRoute = async () => {
 const renderPage = () => {
   document.body.prepend(createHeader());
   renderRoute();
-  document.body.appendChild(createFooter());
+  // document.body.appendChild(createFooter());
   updateRandomZekr();
   setInterval(updateRandomZekr, 300000);
 };

@@ -1,7 +1,9 @@
 const express = require("express");
+require("dotenv").config();
 const router = express.Router();
 const dbConnection = require("../database/config/connection.js");
 const getZeker = require("../database/queries/getZeker.js");
+const getRandomZeker = require("../database/queries/getRandomZeker.js");
 
 router.get("/", (req, res) => {
   const pool = dbConnection;
@@ -18,8 +20,6 @@ router.get("/", (req, res) => {
 console.log("here");
 
 router.get("/zeker", (req, res) => {
-  console.log("in ");
-
   getZeker
     .getZeker()
     .then((result) => {
@@ -38,7 +38,7 @@ router.get("/zeker/:id", (req, res) => {
   const id = req.params.id;
   dbConnection
     .query(
-      `SELECT title, description, is_fav FROM azkar.zekher WHERE id = $1`,
+      `SELECT title, description, is_fav,counter,zekervirtue FROM azkar.zekher WHERE id = $1`,
       [id]
     )
     .then((result) => {
@@ -50,6 +50,75 @@ router.get("/zeker/:id", (req, res) => {
     .catch((err) => {
       console.error("Error fetching task:", err);
       return res.status(500).json({ error: "Failed to fetch task" });
+    });
+});
+
+router.put("/zeker/:id/counter", (req, res) => {
+  const { increment } = req.body;
+  const id = req.params.id;
+
+  const query = `
+    UPDATE azkar.zekher
+    SET counter = counter + $1
+    WHERE id = $2
+    RETURNING id, title, description, category, counter, is_fav;
+  `;
+  const value = increment ? 1 : -1;
+
+  dbConnection
+    .query(query, [value, id])
+    .then((result) => {
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: "Zeker not found" });
+      }
+      return res.json(result.rows[0]);
+    })
+    .catch((err) => {
+      console.error("Error updating counter:", err);
+      return res.status(500).json({ error: "Failed to update counter" });
+    });
+});
+
+router.put("/zeker/:id/fav", async (req, res) => {
+  const { id } = req.params;
+  const { is_fav } = req.body;
+
+  try {
+    const result = await dbConnection.query(
+      "UPDATE azkar.zekher SET is_fav = $1 WHERE id = $2 RETURNING *",
+      [is_fav, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Zeker not found" });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating fav:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/random-zeker", (req, res) => {
+  getRandomZeker()
+    .then((result) => {
+      if (result.rows.length > 0) {
+        res.json({
+          success: true,
+          zeker: result.rows[0],
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          message: "No Zikr found",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching random Zikr:", error);
+      res.status(500).json({
+        success: false,
+        message: "Error fetching random Zikr",
+      });
     });
 });
 
@@ -169,32 +238,6 @@ router.get("/articles/:id", (req, res) => {
     .catch((err) => {
       console.error("Error fetching article:", err);
       return res.status(500).json({ error: "Failed to fetch article" });
-    });
-});
-
-router.put("/zeker/:id/counter", (req, res) => {
-  const { increment } = req.body;
-  const id = req.params.id;
-
-  const query = `
-    UPDATE azkar.zekher
-    SET counter = counter + $1
-    WHERE id = $2
-    RETURNING id, title, description, category, counter, is_fav;
-  `;
-  const value = increment ? 1 : -1;
-
-  dbConnection
-    .query(query, [value, id])
-    .then((result) => {
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: "Zeker not found" });
-      }
-      return res.json(result.rows[0]);
-    })
-    .catch((err) => {
-      console.error("Error updating counter:", err);
-      return res.status(500).json({ error: "Failed to update counter" });
     });
 });
 
