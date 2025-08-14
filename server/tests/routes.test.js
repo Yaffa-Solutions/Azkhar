@@ -171,7 +171,7 @@ describe("DELETE /tasks/:id", () => {
 describe("GET /articles", () => {
   it("should return all articles with author", (done) => {
     request(app)
-      .get("/article")
+      .get("/articles")
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
