@@ -169,7 +169,13 @@ const setupHeaderInteractions = () => {
     if (articlesLink) {
      articlesLink.addEventListener("click", (e) => {
        e.preventDefault();
-       renderArticlesPage();
+      //  renderArticlesPage();
+       renderHome();
+       const articlesSection = document.querySelector(".articles-section");
+      if (articlesSection) {
+        articlesSection.scrollIntoView({ behavior: "smooth" });
+      }
+      window.location.hash = "#articles";
      });
   }
  };
