@@ -170,12 +170,10 @@ const createZekerCard = (zeker) => {
   heartIcon.style.color = zeker.is_fav ? "#ff4757" : "#666";
   favBtn.appendChild(heartIcon);
 
-  // New "Create Task" button
   const taskBtn = createHtmlElement("button", "task-btn");
   const taskIcon = createHtmlElement("i", "fas fa-tasks");
   taskBtn.appendChild(taskIcon);
 
-  // Increment button logic
   incrementBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     updateZekerCounter(zeker.id, true).then((updated) => {
@@ -184,7 +182,6 @@ const createZekerCard = (zeker) => {
     });
   });
 
-  // Decrement button logic
   decrementBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     if (zeker.counter > 0) {
@@ -195,7 +192,6 @@ const createZekerCard = (zeker) => {
     }
   });
 
-  // Favorite button logic
   favBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     const newFavStatus = !zeker.is_fav;
@@ -208,7 +204,6 @@ const createZekerCard = (zeker) => {
     });
   });
 
-  // Task button logic
   taskBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     showCreateTaskModal(zeker);
@@ -230,8 +225,18 @@ const renderZekerSection = () => {
   const categoryWrapper = createHtmlElement("div", "zeker-categories");
   const grid = createHtmlElement("div", "zeker-grid");
 
+  const loadingText = createHtmlElement(
+    "p",
+    "loading-text",
+    "جاري تحميل البيانات..."
+  );
+  grid.appendChild(loadingText);
+
   fetchZekerData()
     .then((data) => {
+      // Remove loader
+      grid.innerHTML = "";
+
       const categories = ["الكل", ...new Set(data.map((d) => d.category))];
 
       categories.forEach((cat, index) => {
@@ -278,11 +283,24 @@ const renderFav = () => {
 
   const grid = createHtmlElement("div", "zeker-grid");
 
+  // Show loading text while fetching
+  const loadingText = createHtmlElement(
+    "p",
+    "loading-text",
+    "جاري تحميل الأذكار المفضلة..."
+  );
+  grid.appendChild(loadingText);
+
   fetch("http://localhost:3000/zeker")
     .then((res) => res.json())
     .then((data) => {
+      grid.innerHTML = ""; // Remove loader
       const favZekers = data.filter((z) => z.is_fav); // match DB column
       renderZekerGrid(favZekers, grid);
+    })
+    .catch((err) => {
+      console.error(err);
+      grid.innerHTML = `<p class="empty-message">حدث خطأ أثناء تحميل البيانات.</p>`;
     });
 
   container.append(title, grid);
