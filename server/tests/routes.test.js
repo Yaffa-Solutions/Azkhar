@@ -178,7 +178,7 @@ describe("GET /articles", () => {
 
         if (res.body.length > 0) {
           const first = res.body[0];
-          if (!("id" in first) || !("title" in first) || !("author" in first)) {
+          if (!("id" in first) || !("title" in first) || !("content" in first)) {
             return done(new Error("Missing fields in article"));
           }
         }
@@ -192,20 +192,49 @@ describe("GET /articles/:id", () => {
   it("should return a specific article if exists", (done) => {
     const testId = 1;
 
-    request(app)
+  //   request(app)
+  //     .get(`/articles/${testId}`)
+  //     .expect((res) => {
+  //       if (res.statusCode === 200) {
+  //         const article = res.body;
+  //         if (!("id" in article) || !("title" in article) || !("author_id" in article)) {
+  //           throw new Error("Missing fields in article");
+  //         }
+  //       } else if (res.statusCode === 404) {
+  //         if (!res.body.error) throw new Error("Expected error message for missing article");
+  //       } else {
+  //         throw new Error("Unexpected status code");
+  //       }
+  //     })
+  //     .end(done);
+  // });
+  request(app)
       .get(`/articles/${testId}`)
-      .expect((res) => {
-        if (res.statusCode === 200) {
-          const article = res.body;
-          if (!("id" in article) || !("title" in article) || !("author_id" in article)) {
-            throw new Error("Missing fields in article");
-          }
-        } else if (res.statusCode === 404) {
-          if (!res.body.error) throw new Error("Expected error message for missing article");
-        } else {
-          throw new Error("Unexpected status code");
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+
+        const article = res.body;
+        if (!("id" in article) || !("title" in article) || !("content" in article)) {
+          return done(new Error("Missing fields in article"));
         }
-      })
-      .end(done);
+
+        done();
+      });
+  });
+
+  it("should return 404 if article does not exist", (done) => {
+    const invalidId = 99999;
+
+    request(app)
+      .get(`/articles/${invalidId}`)
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err);
+
+        if (!res.body.error) return done(new Error("Expected error message for missing article"));
+
+        done();
+      });
   });
 });
